@@ -28,37 +28,23 @@ app.use(cors({
 
 const storage = multer.diskStorage({
    destination: (req, file, cb) => {
-       //console.log('Original filename', file.originalname);
-
        const fileComponents = file.originalname.split('.');
        const extension = fileComponents[fileComponents.length -1];
 
        const changedName = uuid.v4();
 
        cb(null, `${changedName}.${extension}`);
-       //cb(null, `${file.originalname}`);
-       //cb(null, `${file.originalname}-suffix.${extension}`);
+
    }
 });
 
 const Data = multer({storage: storage, limits: {fileSize: 40000000 }});
-/*
-app.post('/files', Data.any(), (req, res) => {
 
-    if (res.status(200)) {
-        console.log('Your file has been uploaded successfully.');
-        console.log(req.files);
-        console.log((req.files as Express.Multer.File[])[0].filename);
-        res.json({ message: 'Successfully uploaded files' });
-        res.end();
-    }
-});
- */
 
 const server = https.createServer({
-    key: fs.readFileSync(`${__dirname}/../ssl/domain.key`),
-    cert: fs.readFileSync(`${__dirname}/../ssl/domain.crt`),
-    passphrase: 'pippo',
+    key: fs.readFileSync(`${__dirname}certificati/domain.key`),
+    cert: fs.readFileSync(`${__dirname}certificati/domain.crt`),
+    passphrase: 'Andreia',
 }, app);
 
 const MemoryStore = createMemoryStore(session);
@@ -84,7 +70,7 @@ routes(app);
 websockets(server, store);
 
 // Servire il frontend
-app.use(express.static(`${__dirname}/../public/`));
+//app.use(express.static(`${__dirname}/../public/`));
 
 server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
