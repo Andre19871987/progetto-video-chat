@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserState {
+  ONLINE
+  AWAY
+  OFFLINE
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
+  password   String
+  username   String
+  name       String
+  phone      String?
+  img        String?
+  address    String?
+  flagAdmin  Boolean   @default(false)
+  flagStatus UserState @default(OFFLINE)
+}
