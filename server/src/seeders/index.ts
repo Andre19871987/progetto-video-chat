@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { UserState } from '../models/types';
 
 const main = async (): Promise<void> => {
-
+/*
     await prisma.user.create({
         data: {
             name: 'Gianfranco Lo Presti',
@@ -115,6 +115,38 @@ const main = async (): Promise<void> => {
             flagStatus: UserState.OFFLINE
         }
     });
+
+
+*/
+
+await prisma.user.create({
+    data: {
+        name: 'Andreia Donzelli',
+        username: 'andreia-donzelli',
+        phone: '337 3987789',
+        address: 'via dei fiori, 15 00100 Roma',
+        email: 'andreia.donzelli@example.com',
+        password: await bcrypt.hash('Pwd#andreia-donzelli', 12),
+        img: 'f02.png',
+        flagAdmin: false,
+        flagStatus: UserState.OFFLINE
+    }
+});
+
+
+await prisma.user.create({
+    data: {
+        name: 'Salvatore Spinoccia',
+        username: 'salvatore-spinoccia',
+        phone: '337 3456876',
+        address: 'via dei fiori, 15 00100 Roma',
+        email: 'salvatore.spinoccia@example.com',
+        password: await bcrypt.hash('Pwd#salvatore-spinoccia', 12),
+        img: 'm02.png',
+        flagAdmin: false,
+        flagStatus: UserState.OFFLINE
+    }
+});
 
 
 

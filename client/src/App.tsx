@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useContext, useEffect, useState } from 'react';
+import Router from './Router';
+import { User } from './types/entities';
+import { LoginContext } from './contexts/LoginContext';
 
-function App() {
+const getSessionUser = () => {
+  const loggedUser = sessionStorage.getItem('loggedUser');
+  return loggedUser ? (JSON.parse(loggedUser) as User) : null;
+};
+
+const saveSessionUser = (loggedUser: User) => {
+  return sessionStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+};
+
+const removeSessionUser = () => {
+  return sessionStorage.removeItem('loggedUser');
+};
+
+export default function App() {
+  const [loggedUser, setLoggedUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    if (loggedUser) {
+      saveSessionUser(loggedUser);
+    } else {
+      removeSessionUser();
+    }
+  }, [loggedUser]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LoginContext.Provider value={{ loggedUser, setLoggedUser }}>
+      <Router />
+    </LoginContext.Provider>
   );
 }
-
-export default App;

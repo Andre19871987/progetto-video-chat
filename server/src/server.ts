@@ -42,8 +42,8 @@ const Data = multer({storage: storage, limits: {fileSize: 40000000 }});
 
 
 const server = https.createServer({
-    key: fs.readFileSync(`${__dirname}certificati/domain.key`),
-    cert: fs.readFileSync(`${__dirname}certificati/domain.crt`),
+    key: fs.readFileSync(`${__dirname}/certificati/domain.key`),
+    cert: fs.readFileSync(`${__dirname}/certificati/domain.crt`),
     passphrase: 'Andreia',
 }, app);
 
